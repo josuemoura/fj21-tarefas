@@ -1,0 +1,32 @@
+body {
+	background-color: #B0E0E6;
+}
+
+tr th {
+	background-color: #836FFF;
+}
+
+.link {
+	border: 1px solid #690;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+	padding: 5px;
+	background-color: #FFFAFA;
+	font-style: oblique;
+	text-decoration: none;
+}
+
+a:HOVER {
+	background-color: #F5F5F5;
+}
+
+#login {
+	color: black;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+#botaoAlterar{
+	float: left;
+	margin-left: 5px;
+}
