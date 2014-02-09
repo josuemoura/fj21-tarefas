@@ -23,7 +23,7 @@ public class ConnectionFactory {
 			Class.forName("org.postgresql.Driver");
 			DriverManager.registerDriver(new org.postgresql.Driver());
 			return DriverManager.getConnection(
-					"jdbc:postgresql://localhost/fj21", "postgres", "35k!w0S2");
+					"jdbc:postgresql://localhost/fj21", "postgres", "brasil");
 		} catch (SQLException exc) {
 			throw new RuntimeException(exc);
 
