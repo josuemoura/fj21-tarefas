@@ -29,7 +29,7 @@
 		function() {
 			$("#tarefa_" + id).closest('tr').hide();
 		} );
-	}
+	}// End finalizaAgora
 </script>
 	<a href="novaTarefa" class="link">Criar uma nova tarefa</a>
 	<br />
