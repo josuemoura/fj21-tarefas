@@ -23,11 +23,6 @@ public class TarefasController {
 	public TarefasController(TarefaDAO dao) {
 		this.dao = dao;
 	}
-	
-	@RequestMapping("index")
-	public String index() {
-		return "../index";
-	}
 
 	@RequestMapping("novaTarefa")
 	public ModelAndView formulario() {
