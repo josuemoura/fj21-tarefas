@@ -1,5 +1,7 @@
 package br.com.caelum.tarefa.modelo;
 
+import javax.persistence.Entity;;
+
 public class Usuario {
 	private String login;
 	private String senha;
