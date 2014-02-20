@@ -23,6 +23,7 @@ public class Tarefa {
 	private String descricao;
 	private boolean finalizado;
 	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern="dd/MM/yyyy")
 	private Calendar dataFinalizacao;
 	
 	public Long getId() {

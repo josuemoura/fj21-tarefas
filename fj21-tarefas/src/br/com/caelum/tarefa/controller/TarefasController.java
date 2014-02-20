@@ -1,8 +1,8 @@
 package br.com.caelum.tarefa.controller;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
-import org.apache.commons.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,24 +10,28 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import br.com.caelum.tarefa.dao.TarefaDAO;
+import br.com.caelum.tarefa.dao.ITarefaDAO;
 import br.com.caelum.tarefa.modelo.Tarefa;
 
-
+@Transactional
 @Controller
 public class TarefasController {
 	
-	private TarefaDAO dao;
-	
 	@Autowired
-	public TarefasController(TarefaDAO dao) {
-		this.dao = dao;
+	private ITarefaDAO dao;
+	
+	@RequestMapping("listaTarefas")
+	public ModelAndView lista(Model model) {
+		ModelAndView mv = new ModelAndView();
+		model.addAttribute("tarefas",dao.lista());
+		mv.setViewName("tarefa/lista");
+		return mv;
 	}
-
+	
 	@RequestMapping("novaTarefa")
 	public ModelAndView formulario() {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("tarefa/formulario");//Altera��o feita em 19/03/2013
+		mv.setViewName("tarefa/formulario");//Alteração feita em 19/03/2013
 		return mv;
 	}
 
@@ -43,18 +47,10 @@ public class TarefasController {
 		return mv;
 	}
 	
-	@RequestMapping("listaTarefas")
-	public ModelAndView lista(Model model) {
-		ModelAndView mv = new ModelAndView();
-		model.addAttribute("tarefas",dao.lista());
-		mv.setViewName("tarefa/lista");
-		return mv;
-	}
-	
 	@RequestMapping("removeTarefa")
-	public ModelAndView remove(Tarefa tarefa) {
-		ModelAndView mv = new ModelAndView();
+	public ModelAndView remove(Tarefa tarefa, Model model) {
 		dao.remove(tarefa);
+		ModelAndView mv = new ModelAndView();
 		mv.setViewName("forward:listaTarefas");
 		return mv;
 	}
@@ -63,6 +59,8 @@ public class TarefasController {
 	public ModelAndView mostra(Long id, Model model) {
 		ModelAndView mv = new ModelAndView();
 		model.addAttribute("tarefa", dao.buscaPorId(id));
+		
+		System.out.println();
 		mv.setViewName("tarefa/mostra");
 		return mv;
 	}
@@ -79,7 +77,7 @@ public class TarefasController {
 	public ModelAndView finaliza(Long id, Model model) {
 		ModelAndView mv = new ModelAndView();
 		Tarefa tarefa = dao.buscaPorId(id);
-		dao.finaliza(tarefa);
+		dao.finaliza(tarefa.getId());
 		model.addAttribute("tarefa", dao.buscaPorId(id));
 		mv.setViewName("tarefa/finalizada");
 		return mv;

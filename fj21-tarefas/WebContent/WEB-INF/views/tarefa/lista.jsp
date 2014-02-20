@@ -41,7 +41,7 @@
 		<display:column title="Finalizado?">
 			<c:if test="${tarefa.finalizado eq true}">
 			Finalizado
-		</c:if>
+			</c:if>
 			<c:if test="${tarefa.finalizado eq false}">
 				<span id="tarefa_${tarefa.id}"> <a href="#"
 					onclick="finalizaAgora(${tarefa.id})">Finalizar</a>
