@@ -39,7 +39,7 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
-	<!-- Componente para evitar ataques XSS -->
+	<!-- Componente para evitar ataques XSS. -->
 	<filter>
 		<filter-name>XSSFilter</filter-name>
 		<filter-class>com.cj.xss.XSSFilter</filter-class>
