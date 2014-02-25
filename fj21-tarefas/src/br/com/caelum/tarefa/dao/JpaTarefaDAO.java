@@ -12,14 +12,15 @@ import br.com.caelum.tarefa.modelo.Tarefa;
 
 @Repository
 public class JpaTarefaDAO implements ITarefaDAO {
-
+	
 	@PersistenceContext
 	private EntityManager manager;
-
+	
 	public Tarefa buscaPorId(Long id) {
 		return manager.find(Tarefa.class, id);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Tarefa> lista() {
 		return manager.createQuery("select t from Tarefa t").getResultList();
 	}
@@ -33,8 +34,7 @@ public class JpaTarefaDAO implements ITarefaDAO {
 	}
 
 	public void remove(Tarefa tarefa) {
-		Tarefa tarefaARemover = buscaPorId(tarefa.getId());
-		manager.remove(tarefaARemover);
+		manager.remove(manager.getReference(Tarefa.class, tarefa.getId()));
 	}
 
 	public void finaliza(Long id) {

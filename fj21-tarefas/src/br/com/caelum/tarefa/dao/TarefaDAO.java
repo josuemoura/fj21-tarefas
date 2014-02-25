@@ -128,6 +128,7 @@ private final Connection connection;
 	}
 	
 	public void altera(Tarefa tarefa){
+		
 		String sql = "update tarefas set descricao=?, finalizado=?, dataFinalizacao=? where id=?";
 		
 		try{
