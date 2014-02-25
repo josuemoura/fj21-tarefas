@@ -9,8 +9,13 @@
 		<welcome-file>index.htm</welcome-file>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
-	
-		<!-- Tempo de sessao -->
+
+	<context-param>
+		<param-name>defaultHtmlEscape</param-name>
+		<param-value>true</param-value>
+	</context-param>
+
+	<!-- Tempo de sessao -->
 	<session-config>
 		<session-timeout>30</session-timeout>
 	</session-config>
@@ -33,5 +38,15 @@
 		<servlet-name>springmvc</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+
+	<!-- Componente para evitar ataques XSS -->
+	<filter>
+		<filter-name>XSSFilter</filter-name>
+		<filter-class>com.cj.xss.XSSFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>XSSFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 
 </web-app>
