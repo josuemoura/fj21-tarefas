@@ -1,4 +1,8 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%><%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%><%@ taglib uri="http://displaytag.sf.net" prefix="display"%><%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%><%@ taglib
+	uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%><%@ taglib
+	uri="http://displaytag.sf.net" prefix="display"%><%@ page
+	language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -18,7 +22,7 @@
 		$.post(
 				"finalizaTarefa",
 				{'id' : id},
-				function() {
+				function(Finalizado) {
 			$("#tarefa_" + id).html("Finalizado");
 		} );
 	}// End finalizaAgora
@@ -49,13 +53,17 @@
 			</c:if>
 
 		</display:column>
-		<display:column property="dataFinalizacao.time"
-			title="Data de finalização" format="{0,date,dd/MM/yyyy}" />
+		<display:column title="Data de finalização">
+			<div id="tarefa_${tarefa.id}">
+				<fmt:formatDate value="${tarefa.dataFinalizacao.time}"
+					pattern="dd/MM/yyyy" />
+			</div>
+		</display:column>
 		<display:column title="Apagar tarefa">
 			<a href="removeTarefa?id=${tarefa.id}">Remove</a>
 		</display:column>
 		<display:column title="Alterar tarefa">
-			<a href="mostraTarefa?id=${tarefa.id}">Altera</a>
+			<a href='<c:url value="/mostraTarefa?id=${tarefa.id}" />'>Altera</a>
 		</display:column>
 		<display:column title="Desafio remove tarefa">
 			<span id="tarefa_${tarefa.id}"> <a href="#"

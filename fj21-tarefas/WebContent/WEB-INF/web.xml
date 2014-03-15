@@ -10,11 +10,6 @@
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
 
-	<context-param>
-		<param-name>defaultHtmlEscape</param-name>
-		<param-value>true</param-value>
-	</context-param>
-
 	<!-- Tempo de sessao -->
 	<session-config>
 		<session-timeout>30</session-timeout>
@@ -38,6 +33,41 @@
 		<servlet-name>springmvc</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+
+	<filter>
+		<filter-name>UrlRewriteFilter</filter-name>
+		<filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
+
+		<init-param>
+			<param-name>confReloadCheckInterval</param-name>
+			<param-value>60</param-value>
+		</init-param>
+
+		<init-param>
+			<param-name>confPath</param-name>
+			<param-value>/WEB-INF/urlrewrite.xml</param-value>
+		</init-param>
+
+		<init-param>
+			<param-name>logLevel</param-name>
+			<param-value>DEBUG</param-value>
+		</init-param>
+		
+		<init-param>
+            <param-name>modRewriteConfText</param-name>
+            <param-value>
+                RewriteRule ^/~([^/]+)/?(.*) /u/$1/$2 [R]
+                RewriteRule ^/([uge])/([^/]+)$ /$1/$2/ [R]
+            </param-value>
+        </init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>UrlRewriteFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+
 
 	<!-- Componente para evitar ataques XSS. -->
 	<filter>

@@ -1,5 +1,9 @@
 package br.com.caelum.tarefa.controller;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.com.caelum.tarefa.dao.TarefaDAO;
@@ -49,20 +54,40 @@ public class TarefasController {
 		return mv;
 	}
 	
+	
 	@RequestMapping("removeTarefa")
 	public ModelAndView remove(Long id) {
 		Tarefa tarefa = dao.buscaPorId(id);
-		dao.remove(tarefa);
+		if(tarefa != null) {
+			dao.remove(tarefa);
+		}
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("forward:listaTarefas");
 		return mv;
 	}
 	
-	@RequestMapping("mostraTarefa")
-	public ModelAndView mostra(Long id, Model model) {
+	@RequestMapping(value="mostraTarefa/**", method = RequestMethod.GET)
+	public ModelAndView mostra(HttpServletRequest request, Model model) {
+		
 		ModelAndView mv = new ModelAndView();
-		model.addAttribute("tarefa", dao.buscaPorId(id));
-		mv.setViewName("tarefa/mostra");
+		String id = request.getParameter("id");
+		Pattern pattern = Pattern.compile("[a+z]+\\s");
+		Matcher matcher = pattern.matcher(id);
+		
+		// Se nao achar caracter faca 
+		if(!matcher.find()) {
+			Tarefa tarefa = dao.buscaPorId(Long.valueOf(id));
+			if(tarefa!=null) {
+				System.out.println("Sem caracter");
+				model.addAttribute("tarefa", tarefa);
+				mv.setViewName("tarefa/mostra");
+			} else {
+				mv.setViewName("forward:listaTarefas");
+			}
+		} else {
+			mv.setViewName("forward:listaTarefas");
+			return mv;
+		}
 		return mv;
 	}
 	
